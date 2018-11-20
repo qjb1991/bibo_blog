@@ -1,0 +1,18 @@
+<include file="public@header"/>
+<div class="wrapper">
+    <main>
+        <div class="aboutbox">
+            <h2 class="place">您现在的位置是：<a href="/">网站首页</a>> {$page.post_title|default=''}</h2>
+            <div class="abinfos">
+                {$page.post_content|default=''}
+            </div>
+        </div>
+    </main>
+    <!--右侧内容 start-->
+    <include file="public@righter"/>
+    <!--右侧内容 end-->
+</div>
+<!--wrapper end-->
+<include file="public@footer"/>
+</body>
+</html>

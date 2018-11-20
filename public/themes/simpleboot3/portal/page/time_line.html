@@ -1,0 +1,24 @@
+<include file="public@header"/>
+<div class="wrapper">
+    <main>
+        <h2 class="place">您现在的位置是：<a href="/">网站首页</a>&gt; {$nav}</h2>
+        <div class="timebox">
+            <ul>
+                <volist name="data" id="vo">
+                <li><span>{:date('Y-m-d',$vo.published_time)}</span><i><a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id']))}" target="_blank">{$vo.post_title}</a></i></li>
+                </volist>
+            </ul>
+        </div>
+        <div style="width: 100%;text-align: center;padding-top: 30px;">
+            <ul class="pagination">{$page|default=''}</ul>
+        </div>
+    </main>
+    <!--右侧内容 start-->
+    <include file="public@righter"/>
+    <!--右侧内容 end-->
+</div>
+<!--wrapper end-->
+<include file="public@footer"/>
+</body>
+</html>
+

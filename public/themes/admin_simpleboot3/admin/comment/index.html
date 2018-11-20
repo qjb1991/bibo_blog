@@ -1,0 +1,94 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('index')}">留言管理</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('index')}">
+        标题:
+        <input type="text" class="form-control" name="keyword" style="width: 200px;"
+               value="{$keyword|default=''}" placeholder="请输入关键字">
+        <button class="btn btn-primary">搜索</button>
+    </form>
+    <form class="js-ajax-form" method="post">
+        <div class="table-actions">
+            <button class="btn btn-primary btn-sm js-ajax-submit" type="submit" data-action="{:url('audit')}"
+                    data-subcheck="true" data-msg="你确定审核吗？">审核
+            </button>
+            <button class="btn btn-primary btn-sm js-ajax-submit" type="submit" data-action="{:url('audit_no')}"
+                    data-subcheck="true" data-msg="你确定取消审核吗？">取消审核
+            </button>
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit" data-action="{:url('delete')}"
+                    data-subcheck="true" data-msg="你确定删除吗？">{:lang('DELETE')}
+            </button>
+        </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="16">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">序号</th>
+                <th width="120">用户</th>
+                <th>留言内容</th>
+                <th width="150">邮箱</th>
+                <th width="160">留言时间</th>
+                <th width="80">状态</th>
+                <th width="160">操作</th>
+            </tr>
+            </thead>
+            <foreach name="data" item="vo">
+                <tr>
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$vo.id}">
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.user_name}</td>
+                    <td>{$vo.content}</td>
+                    <td>{$vo.user_email}</td>
+                    <td>{:date('Y-m-d H:i:s',$vo['time'])}</td>
+                    <td>
+                        <notempty name="vo.is_show">
+                            <a data-toggle="tooltip" title="已审核"><i class="fa fa-check"></i></a>
+                            <else/>
+                            <a data-toggle="tooltip" title="未审核"><i class="fa fa-close"></i></a>
+                        </notempty>
+                        <notempty name="vo.site_reply">
+                            <a data-toggle="tooltip" title="已回复"><i class="fa fa-check"></i></a>
+                            <else/>
+                            <a data-toggle="tooltip" title="未回复"><i class="fa fa-close"></i></a>
+                        </notempty>
+                    </td>
+                    <td>
+                        <notempty name="vo.is_show">
+                            <a href="{:url('audit_no',array('ids'=>$vo['id']))}" class="js-ajax-delete" data-msg="你确定取消审核吗？">取消审核</a>
+                            <else/>
+                            <a href="{:url('audit',array('ids'=>$vo['id']))}" class="js-ajax-delete" data-msg="你确定审核吗？">审核</a>
+                        </notempty>
+                        <a href="{:url('edit',array('id'=>$vo['id']))}">{:lang('EDIT')}</a>
+                        <a href="{:url('delete',array('ids'=>$vo['id']))}" class="js-ajax-delete">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+        </table>
+        <div class="table-actions">
+            <button class="btn btn-primary btn-sm js-ajax-submit" type="submit" data-action="{:url('audit')}"
+                    data-subcheck="true" data-msg="你确定审核吗？">审核
+            </button>
+            <button class="btn btn-primary btn-sm js-ajax-submit" type="submit" data-action="{:url('audit_no')}"
+                    data-subcheck="true" data-msg="你确定取消审核吗？">取消审核
+            </button>
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit" data-action="{:url('delete')}"
+                    data-subcheck="true" data-msg="你确定删除吗？">{:lang('DELETE')}
+            </button>
+        </div>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

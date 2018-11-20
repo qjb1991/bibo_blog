@@ -1,0 +1,65 @@
+<include file="public@header"/>
+<link href="__TMPL__/public/assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="javascript:history.back(-1);">多图文回复</a></li>
+        <li class="active"><a href="{:url('news_edit')}">编辑回复</a></li>
+    </ul>
+    <form action="{:url('news_edit_post')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="100">关键字<span class="form-required">*</span></th>
+                        <td>
+                            <input type="hidden" name="id" value="{$data.id}">
+                            <input class="form-control" type="text" style="width: 400px;" name="keyword" value="{$data.keyword}"
+                                   required
+                                   placeholder="请输入关键字"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="100">预览</th>
+                        <td>
+                            <div class="section">
+                                <foreach name="data.img" item="vo" key="k">
+                                    <if condition="$k eq 0">
+                                        <div class="sec_t">
+                                            <img src="{$vo.pic}"/>
+                                            <div class="t_mod">
+                                                <p>{$vo.title}</p>
+                                            </div></div>
+                                        <elseif condition="$k eq 1"/>
+                                        <ul class="sec_list">
+                                            <li>
+                                                <p>{$vo.title}</p>
+                                                <img src="{$vo.pic}"/>
+                                            </li>
+                                        <else/>
+                                            <li>
+                                                <p>{$vo.title}</p>
+                                                <img src="{$vo.pic}"/>
+                                            </li>
+                                    </if>
+                                </foreach>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

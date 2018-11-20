@@ -1,0 +1,56 @@
+<include file="public@header"/>
+<div class="wrapper">
+    <main>
+        <!--banner begin-->
+        <div class="banner">
+            <div id="banner" class="fader">
+                <slides id="1">
+                    <li class="slide" >
+                        <a href="{$vo.url|default=''}" title="{$vo.description|default=''}" target="{$vo.target|default=''}">
+                            <img src="{:cmf_get_image_url($vo.image)}" alt="{$vo.description}">
+                            <span class="imginfo">{$vo.title|default=''}</span>
+                        </a>
+                    </li>
+                </slides>
+                <div class="fader_controls">
+                    <div class="page prev" data-target="prev">&lsaquo;</div>
+                    <div class="page next" data-target="next">&rsaquo;</div>
+                    <ul class="pager_list">
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--banner end-->
+        <div class="bloglist">
+            <ul>
+                <volist name="data" id="vo">
+                <li> <i class="blogpic"><a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id']))}"><img src="{:cmf_get_image_url(json_decode($vo.more,true)['thumbnail'])}" alt="{$vo.post_title}"> </a></i>
+                    <dl>
+                        <dt><a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id']))}" target="_blank">{$vo.post_title}</a></dt>
+                        <dd><span class="bloginfo">{$vo.post_excerpt}</span>
+                            <p class="timeinfo">
+                                <span class="lanmu"><a href="{:cmf_url('portal/List/index',array('id'=>$vo['cid']))}" target="_blank">{$vo.name}</a></span>
+                                <span class="date">{:date('Y-m-d',$vo.published_time)}</span>
+                                <span class="yuedu">浏览（{$vo.post_hits}）</span>
+                                <span class="like">点赞（{$vo.post_like}）</span>
+                            </p>
+                            <a class="read" href="{:cmf_url('portal/Article/index',array('id'=>$vo['id']))}">阅读更多</a> </dd>
+                    </dl>
+                </li>
+                </volist>
+            </ul>
+        </div>
+
+        <div style="width: 100%;text-align: center">
+            <ul class="pagination">{$page|default=''}</ul>
+        </div>
+        <!--bloglist end-->
+    </main>
+    <!--右侧内容 start-->
+    <include file="public@righter"/>
+    <!--右侧内容 end-->
+</div>
+<!--wrapper end-->
+<include file="public@footer"/>
+</body>
+</html>

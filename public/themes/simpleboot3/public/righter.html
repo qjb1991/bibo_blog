@@ -1,0 +1,91 @@
+<aside class="sidebar">
+    <if condition="$noArticle neq 1">
+    <div class="fenlei">
+        <ul class="flnav">
+            <li class="flselect"><a href="javascript:;" title="最新文章" class="pall"></a></li>
+            <li><a href="javascript:;" title="推荐文章" class="pgood"></a></li>
+            <li><a href="javascript:;" title="点击排行" class="pbro"></a></li>
+            <li><a href="javascript:;" title="头条关注" class="pfav"></a></li>
+        </ul>
+    </div>
+    <div class="newstw">
+        <ul class="sidenews">
+            <h2>最新文章</h2>
+            <volist name="data_newest" id="vo">
+                <li> <i><img src="{:cmf_get_image_url(json_decode($vo.more,true)['thumbnail'])}"></i>
+                    <p><a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id']))}">{$vo.post_title}</a></p>
+                    <span>{:date('Y-m-d',$vo.published_time)}</span>
+                </li>
+            </volist>
+        </ul>
+        <ul class="sidenews">
+            <h2>推荐文章</h2>
+            <volist name="data_recommended" id="vo">
+                <li> <i><img src="{:cmf_get_image_url(json_decode($vo.more,true)['thumbnail'])}"></i>
+                    <p><a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id']))}">{$vo.post_title}</a></p>
+                    <span>{:date('Y-m-d',$vo.published_time)}</span> </li>
+            </volist>
+        </ul>
+        <ul class="sidenews">
+            <h2>点击排行</h2>
+            <volist name="data_ranking" id="vo">
+                <li> <i><img src="{:cmf_get_image_url(json_decode($vo.more,true)['thumbnail'])}"></i>
+                    <p><a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id']))}">{$vo.post_title}</a></p>
+                    <span>{:date('Y-m-d',$vo.published_time)}</span> </li>
+            </volist>
+        </ul>
+        <ul class="sidenews">
+            <h2>头条关注</h2>
+            <volist name="data_headline" id="vo">
+                <li> <i><img src="{:cmf_get_image_url(json_decode($vo.more,true)['thumbnail'])}"></i>
+                    <p><a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id']))}">{$vo.post_title}</a></p>
+                    <span>{:date('Y-m-d',$vo.published_time)}</span> </li>
+            </volist>
+        </ul>
+    </div>
+        <else/>
+    </if>
+    <div class="about">
+        <h2 class="hometitle">关于本站</h2>
+        <ul>
+            <div class="avatar"> <img src="{:cmf_get_image_preview_url($site_info.site_admin_photo)}" alt=""> </div>
+            <p class="abname">{$site_info.site_name}</p>
+            <p class="abtext"> {$site_info.site_synopsis} </p>
+            <!--<li><a class="xlwb" href="#" target="_blank"></a></li>-->
+            <li><a class="txqq" href="javascript:;" title="{$site_info.site_admin_qq}"></a></li>
+            <li><a class="rss" href="javascript:;" title="{$site_info.site_admin_email}"></a></li>
+            <li class="wxpic"><a class="wx" href="javascript:;"></a><img src="{:cmf_get_image_preview_url($site_info.site_admin_wechat)}"></li>
+        </ul>
+    </div>
+    <div class="ad"> <img src="__TMPL__/public/assets/images/7.jpg"> </div>
+    <!--<div class="tjlm">
+        <h2 class="hometitle">推荐栏目</h2>
+        <ul>
+            <li><a href="about.html">关于我</a></li>
+            <li><a href="share.html">模板分享</a></li>
+            <li><a href="list.html">博客日记</a></li>
+            <li><a href="info.html">慢生活</a></li>
+            <li><a href="time.html">时间轴</a></li>
+            <li><a href="#">美文欣赏</a></li>
+        </ul>
+    </div>-->
+    <!--<div class="tpjx">
+        <h2 class="hometitle">图片精选</h2>
+        <ul>
+            <li><a href="#"><i><img src="__TMPL__/public/assets/images/1.jpg"></i><span>个人博客，属于我的小世界！</span></a></li>
+            <li><a href="#"><i><img src="__TMPL__/public/assets/images/2.jpg"></i><span>个人博客，属于我的小世界！</span></a></li>
+            <li><a href="#"><i><img src="__TMPL__/public/assets/images/3.jpg"></i><span>个人博客，属于我的小世界！</span></a></li>
+            <li><a href="#"><i><img src="__TMPL__/public/assets/images/4.jpg"></i><span>个人博客，属于我的小世界！</span></a></li>
+            <li><a href="#"><i><img src="__TMPL__/public/assets/images/5.jpg"></i><span>个人博客，属于我的小世界！</span></a></li>
+            <li><a href="#"><i><img src="__TMPL__/public/assets/images/6.jpg"></i><span>个人博客，属于我的小世界！</span></a></li>
+        </ul>
+    </div>-->
+    <div class="links">
+        <h2 class="hometitle">友情链接</h2>
+        <ul>
+            <links>
+                <li><a href="{$vo.url|default=''}" target="{$vo.target|default=''}">{$vo.name|default=''}</a></li>
+            </links>
+        </ul>
+    </div>
+</aside>

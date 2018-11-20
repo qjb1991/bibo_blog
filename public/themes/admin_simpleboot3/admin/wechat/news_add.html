@@ -1,0 +1,123 @@
+<include file="public@header"/>
+<link href="__TMPL__/public/assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="javascript:history.back(-1);">多图文回复</a></li>
+        <li class="active"><a href="{:url('news_add')}">添加回复</a></li>
+    </ul>
+    <form action="{:url('news_add_post')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="100">关键字<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" style="width: 400px;" name="keyword"
+                                   required
+                                   placeholder="请输入关键字"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="100">选择图文<span class="form-required">*</span></th>
+                        <td>
+                            <input class="btn" type="button" value="添加" onclick="add_img();"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="100">预览</th>
+                        <td>
+                            <input type="hidden" value="0" id="img_num">
+                            <input type="hidden" value="" id="key_id">
+                            <input type="hidden" name="img_id" value="" id="img_id">
+                            <div class="section"></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="button" class="btn btn-primary js-ajax-submit" onclick="save(this);">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript" src="__STATIC__/js/layer/layer.js"></script>
+<script>
+    function save(obj) {
+        var num=$('#img_num').val();
+        if (num<2) {
+            layer.alert('最少选择2个图文', {
+                icon: 2,
+                skin: 'layer-ext-moon' //皮肤
+            })
+        }else{
+            $(obj).attr('type','submit');
+        }
+    }
+    function add_img() {
+        var num=$('#img_num').val();
+        if (num>=8) {
+            layer.alert('最多选择8个图文', {
+                icon: 2,
+                skin: 'layer-ext-moon' //皮肤
+            })
+        }else{
+            var id = $('#key_id').val();
+            var imgId = $('#img_id').val();
+            openIframeLayer('{:url("img_list")}?num='+num+'&id='+id,'选择图文',{
+                btn: ['确定', '取消'],
+                area: ['800px', '520px'],
+                yes: function (index, layero) {
+                    var iframeWin          = window[layero.find('iframe')[0]['name']];
+                    var data = iframeWin.confirm();
+                    if (data.id.length == 0 || data.imgId.length==0) {
+                        layer.msg('请选择图文');
+                        return;
+                    }
+                    if (data.num==0) {
+                        $('.section').append(
+                                ' <div class="sec_t">' +
+                                '<img src="'+data.img+'"/>' +
+                                '<div class="t_mod"><p>'+data.title+'</p>' +
+                                '</div></div>'
+                        );
+                    }else if(data.num==1){
+                        $('.section').append(
+                                '<ul class="sec_list"><li>' +
+                                '<p>'+data.title+'</p>' +
+                                '<img src="'+data.img+'"/>' +
+                                '</li></ul>'
+                        );
+                    }else{
+                        $('.sec_list').append(
+                                '<li>' +
+                                '<p>'+data.title+'</p>' +
+                                '<img src="'+data.img+'"/>' +
+                                '</li>'
+                        );
+                    }
+                    if (imgId.length==0) {
+                        $('#img_id').val(data.imgId);
+                    }else{
+                        $('#img_id').val(imgId+','+data.imgId);
+                    }
+                    if (id.length==0) {
+                        $('#key_id').val(data.id);
+                    }else{
+                        $('#key_id').val(id+','+data.id);
+                    }
+                    $('#img_num').val(data.num+1);
+                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>

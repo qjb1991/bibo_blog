@@ -1,0 +1,144 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('index')}">公众号配置</a></li>
+    </ul>
+    <section class="content" style="padding:20px 15px;">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <!--表单数据-->
+            <form method="post" class="form-horizontal js-ajax-form" action="{:url('index_post')}">
+                <!--通用信息-->
+                <div class="tab-content col-md-10">
+                    <div class="tab-pane active" id="tab_tongyong">
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <td class="col-sm-2">公众号名称：</td>
+                                <td class="col-sm-8 ">
+                                    <input type="hidden" name="id" value="{$wechat.id|default=''}">
+                                    <input type="text" class="form-control" name="wxname" value="{$wechat.wxname|default=''}" required />
+                                    <span id="err_attr_name" style="color:#F00; display:none;"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>AppID：</td>
+                                <td >
+                                    <input type="text" class="form-control" name="appid" value="{$wechat.appid|default=''}" required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>AppSecret：</td>
+                                <td >
+                                    <input type="text" class="form-control" name="appsecret" value="{$wechat.appsecret|default=''}" required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Token：</td>
+                                <td >
+                                    <input type="text" class="form-control" name="w_token" value="{$wechat.w_token|default=''}" required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>EncodingAESKey：</td>
+                                <td >
+                                    <input type="text" class="form-control" name="aeskey" value="{$wechat.aeskey|default=''}" required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>公众号原始id：</td>
+                                <td >
+                                    <input type="text" class="form-control" name="wxid" value="{$wechat.wxid|default=''}" required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>微信号：</td>
+                                <td >
+                                    <input type="text" class="form-control" name="weixin" value="{$wechat.weixin|default=''}" required />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>头像地址：</td>
+                                <td >
+                                    <div style="text-align: left;">
+                                        <input type='hidden' name='headerpic' id='thumbnail1' value="{$wechat.headerpic|default=''}">
+                                        <a href="javascript:uploadOneImage('图片上传','#thumbnail1');">
+                                            <if condition="empty($wechat['headerpic'])">
+                                                <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                                     id='thumbnail1-preview'
+                                                     width='135' height='135' style='cursor: pointer'/>
+                                                <else/>
+                                                <img src="{:cmf_get_image_preview_url($wechat['headerpic'])}"
+                                                     id='thumbnail1-preview'
+                                                     width='135' height='135' style='cursor: hand'/>
+                                            </if>
+                                        </a>
+                                        <input type="button" class="btn btn-sm"
+                                               onclick="$('#thumbnail1-preview').attr('src','__TMPL__/public/assets/images/default-thumbnail.png');$('#thumbnail1').val('');return false;"
+                                               value="取消图片">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>二维码：</td>
+                                <td >
+                                    <div style="text-align: left;">
+                                        <input type='hidden' name='qr' id='thumbnail2' value="{$wechat.qr|default=''}">
+                                        <a href="javascript:uploadOneImage('图片上传','#thumbnail2');">
+                                            <if condition="empty($wechat['qr'])">
+                                                <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                                                     id='thumbnail2-preview'
+                                                     width='135' height='135' style='cursor: pointer'/>
+                                                <else/>
+                                                <img src="{:cmf_get_image_preview_url($wechat['qr'])}"
+                                                     id='thumbnail2-preview'
+                                                     width='135' height='135' style='cursor: hand'/>
+                                            </if>
+                                        </a>
+                                        <input type="button" class="btn btn-sm"
+                                               onclick="$('#thumbnail2-preview').attr('src','__TMPL__/public/assets/images/default-thumbnail.png');$('#thumbnail2').val('');return false;"
+                                               value="取消图片">
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>微信号类型：</td>
+                                <td >
+                                    <select name="type" class="form-control" style="width:30%;">
+                                        <option value="1" <?php if($wechat['type']==1){echo 'selected';} ?>>订阅号</option>
+                                        <option value="2" <?php if($wechat['type']==2){echo 'selected';} ?>>认证订阅号</option>
+                                        <option value="3" <?php if($wechat['type']==3){echo 'selected';} ?>>服务号</option>
+                                        <option value="4" <?php if($wechat['type']==4){echo 'selected';} ?>>认证服务号</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>接入状态：</td>
+                                <td >
+                                    <input type="radio" name="wait_access" value="0" <if condition="$wechat['wait_access'] eq 0">checked="checked"</if>/> 等待接入
+                                    <input type="radio" name="wait_access" value="1" <if condition="$wechat['wait_access'] eq 1">checked="checked"</if>/> 已接入
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td></td>
+                                <td class="text-left">
+                                    <button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </form><!--表单数据-->
+        </div>
+    </section>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

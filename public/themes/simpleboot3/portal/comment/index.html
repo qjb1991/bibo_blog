@@ -1,0 +1,111 @@
+<include file="public@header"/>
+<script src="__STATIC__/js/layer/layer.js"></script>
+<div class="wrapper">
+    <main>
+        <div class="aboutbox">
+            <h2 class="place">您现在的位置是：<a href="/">网站首页</a>> {$nav|default=''}</h2>
+            <div class="news_infos">
+                <div class="issue">
+                    <div class="inp">
+                        <h4>来说点儿什么吧...</h4>
+                    </div>
+                    <form action="" method="post" id="form">
+                        <div class="inp">
+                            <input type="text" name="user_name" value="" placeholder="请输入您的昵称"/>
+                        </div>
+                        <div class="inp">
+                            <input type="text" name="user_email" value="" placeholder="请输入您的邮箱"/>
+                        </div>
+                        <div class="inp inp_yzm">
+                            <input type="text" name="code" value="" placeholder="请输入验证码"/>
+                            <a class="inp_y" href="#"> <captcha height="32" width="150" font-size="18"/></a>
+                        </div>
+                        <textarea name="content" placeholder="文明上网，理性发言"></textarea>
+                        <input type="button" value="提交" onclick="commit();"/>
+                    </form>
+                </div>
+                <!--列表-->
+                <ul class="infos_list">
+                    <volist name="data" id="vo">
+                    <li>
+                        <div class="infos_nr">
+                            <img class="infos_m" src="__TMPL__/public/assets/images/tx.png"/>
+                            <div class="infos_n">
+                                <p>{$vo.user_name}</p>
+                                <span>{$vo.content}</span>
+                            </div>
+                        </div>
+                        <span class="infos_d">{:date('Y-m-d',$vo['time'])}</span>
+                    </li>
+                        <if condition="$vo['site_reply']">
+                            <div class="infos_hf">
+                                <p><span>站长</span>&nbsp;&nbsp;{$vo.site_reply}</p>
+                            </div>
+                        </if>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+        <div style="width: 100%;text-align: center">
+            <ul class="pagination">{$page|default=''}</ul>
+        </div>
+    </main>
+    <!--右侧内容 start-->
+    <include file="public@righter"/>
+    <!--右侧内容 end-->
+</div>
+<!--wrapper end-->
+<include file="public@footer"/>
+<script>
+    function commit() {
+        var user = $('input[name="user_name"]').val();
+        if (!user) {
+            layer.msg('请输入用户名', {icon: 5});
+            return false;
+        }
+        if (user.length<2 || user.length>20) {
+            layer.msg('用户名由2-20位字符组成', {icon: 5});
+            return false;
+        }
+        var email = $('input[name="user_email"]').val();
+        if (email) {
+            var regEmail=/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if (!regEmail.test(email)) {
+                layer.msg('邮箱格式错误', {icon: 5});
+                return false;
+            }
+        }
+        if (!$('input[name="code"]').val()) {
+            layer.msg('请输入验证码', {icon: 5});
+            return false;
+        }
+        if (!$('textarea[name="content"]').val()) {
+            layer.msg('请输入留言内容', {icon: 5});
+            return false;
+        }
+        $.ajax({
+            url:'{:url("index_post")}',
+            type:'POST',
+            data: $('#form').serialize(),
+            dataType:'JSON',
+            success: function (data) {
+                if (data.code==1) {
+                    layer.msg(data.msg, {icon: 6});
+                    $('#like_num').text(data.data);
+                }else{
+                    editCode();
+                    layer.msg(data.msg, {icon: 5});
+                }
+            },
+            error: function () {
+                layer.msg('系统繁忙，请稍后再试', {icon: 0});
+            }
+        });
+    }
+    /*更新验证码*/
+    function editCode() {
+        $('.inp_y').find('img').attr('src','/captcha/new.html?height=32&width=150&font_size=18&time='+Math.random());
+    }
+</script>
+</body>
+</html>

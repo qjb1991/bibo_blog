@@ -1,0 +1,67 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="javascript:history.back(-1);">菜单管理</a></li>
+        <li class="active"><a href="{:url('menu_edit')}">编辑菜单</a></li>
+    </ul>
+    <form action="{:url('menu_edit_post')}" method="post" class="js-ajax-form">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="150">上级菜单</th>
+                        <td>
+                            <input type="hidden" name="id" value="{$data.id|default=0}">
+                            <select class="form-control" name="parent_id" id="input-parent_id" style="width:550px">
+                                <option value="0">一级菜单</option>{$select_category}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="150">菜单名称<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" style="width: 550px;" name="name" value="{$data.name|default=''}"
+                                   required
+                                   placeholder="请输入菜单名称"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="150">菜单类型</th>
+                        <td>
+                            <select class="form-control" name="type" style="width:550px">
+                                <option <if condition="$data['type'] eq 'view'">selected</if> value="view">链接</option>
+                                <option <if condition="$data['type'] eq 'click'">selected</if> value="click">触发关键字</option>
+                                <option <if condition="$data['type'] eq 'scancode_push'">selected</if> value="scancode_push">扫码</option>
+                                <option <if condition="$data['type'] eq 'scancode_waitmsg'">selected</if> value="scancode_waitmsg"> 扫码（等待信息）</option>
+                                <option <if condition="$data['type'] eq 'pic_sysphoto'">selected</if> value="pic_sysphoto">系统拍照发图</option>
+                                <option <if condition="$data['type'] eq 'pic_photo_or_album'">selected</if> value="pic_photo_or_album">拍照或者相册发图</option>
+                                <option <if condition="$data['type'] eq 'pic_weixin'">selected</if> value="pic_weixin">微信相册发图</option>
+                                <option <if condition="$data['type'] eq 'location_select'">selected</if> value="location_select">地理位置</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>类型值</th>
+                        <td>
+                            <input class="form-control" type="text" name="value" style="width:550px" value="{$data.value|default=''}"
+                                   placeholder="请输入类型值">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

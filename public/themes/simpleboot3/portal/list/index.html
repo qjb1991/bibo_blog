@@ -1,0 +1,42 @@
+<include file="public@header"/>
+<div class="wrapper">
+    <main>
+        <h2 class="place">您现在的位置是：<a href="/">网站首页</a>&gt; {$nav}</h2>
+
+        <div class="bloglist" style="width: 100%">
+            <if condition="count($data) lt 1">
+                <p style="line-height: 40px;text-indent:10px;">没有找到相关内容...</p>
+            <else/>
+            <ul>
+                <volist name="data" id="vo">
+                    <li> <i class="blogpic"><a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id']))}"><img src="{:cmf_get_image_url(json_decode($vo.more,true)['thumbnail'])}" alt="{$vo.post_title}"> </a></i>
+                        <dl>
+                            <dt><a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id']))}" target="_blank">{$vo.post_title}</a></dt>
+                            <dd><span class="bloginfo">{$vo.post_excerpt}</span>
+                                <p class="timeinfo">
+                                    <span class="lanmu"><a href="{:cmf_url('portal/List/index',array('id'=>$vo['cid']))}" target="_blank">{$vo.name}</a></span>
+                                    <span class="date">{:date('Y-m-d',$vo.published_time)}</span>
+                                    <span class="yuedu">浏览（{$vo.post_hits}）</span>
+                                    <span class="like">点赞（{$vo.post_like}）</span>
+                                </p>
+                                <a class="read" href="{:cmf_url('portal/Article/index',array('id'=>$vo['id']))}">阅读更多</a> </dd>
+                        </dl>
+                    </li>
+                </volist>
+            </ul>
+            </if>
+        </div>
+
+        <div style="width: 100%;text-align: center">
+            <ul class="pagination">{$page|default=''}</ul>
+        </div>
+        <!--bloglist end-->
+    </main>
+    <!--右侧内容 start-->
+    <include file="public@righter"/>
+    <!--右侧内容 end-->
+</div>
+<!--wrapper end-->
+<include file="public@footer"/>
+</body>
+</html>

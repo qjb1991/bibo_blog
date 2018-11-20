@@ -1,0 +1,63 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('text')}">文本回复</a></li>
+        <li><a href="{:url('text_add')}">添加回复</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('text')}">
+        标题:
+        <input type="text" class="form-control" name="keyword" style="width: 200px;"
+               value="{$post.keyword|default=''}" placeholder="请输入关键字">
+        <button class="btn btn-primary">搜索</button>
+    </form>
+    <form class="js-ajax-form" method="post">
+        <div class="table-actions">
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit" data-action="{:url('text_del')}"
+                    data-subcheck="true" data-msg="{:lang('DELETE_CONFIRM_MESSAGE')}">{:lang('DELETE')}
+            </button>
+        </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="16">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">序号</th>
+                <th width="150">关键字</th>
+                <th>回复内容</th>
+                <th width="160">发布时间</th>
+                <th width="120">操作</th>
+            </tr>
+            </thead>
+            <foreach name="data" item="vo" key="k">
+                <tr>
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$vo.id}">
+                    </td>
+                    <td>{$k+1}</td>
+                    <td>{$vo.keyword}</td>
+                    <td>{$vo.text}</td>
+                    <td>{:date('Y-m-d H:i',$vo['createtime'])}</td>
+                    <td>
+                        <a href="{:url('text_edit',array('id'=>$vo['id']))}">{:lang('EDIT')}</a>
+                        <a href="{:url('text_del',array('ids'=>$vo['id']))}" class="js-ajax-delete">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+        </table>
+        <div class="table-actions">
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit" data-action="{:url('text_del')}"
+                    data-subcheck="true" data-msg="你确定删除吗？">{:lang('DELETE')}
+            </button>
+        </div>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

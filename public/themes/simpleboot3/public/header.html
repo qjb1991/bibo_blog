@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{$site_info.site_seo_title}</title>
+    <meta name="keywords" content="{$site_info.site_seo_keywords}" />
+    <meta name="description" content="{$site_info.site_seo_description}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="__TMPL__/public/assets/favicon.ico" type="image/x-icon" />
+    <link href="__TMPL__/public/assets/css/base.css" rel="stylesheet">
+    <link href="__TMPL__/public/assets/css/index.css" rel="stylesheet">
+    <link href="__TMPL__/public/assets/css/m.css" rel="stylesheet">
+    <!--代码统计 start-->
+    {$site_info.site_analytics}
+    <!--代码统计 end-->
+    <script src="__TMPL__/public/assets/js/jquery.min.js" ></script>
+    <script src="__TMPL__/public/assets/js/hc-sticky.js"></script>
+    <script src="__TMPL__/public/assets/js/comm.js"></script>
+    <!--[if lt IE 9]>
+    <script src="__TMPL__/public/assets/js/modernizr.js"></script>
+    <![endif]-->
+</head>
+<body>
+<header id="header">
+    <div class="navbar">
+        <div class="topbox">
+            <p class="welcome">{$site_info.site_welcome}</p>
+            <div class="searchbox">
+                <div id="search_bar" class="search_bar">
+                    <form  id="searchform" action="{:cmf_url('portal/Search/index')}" method="get" name="searchform">
+                        <input class="input" placeholder="想搜点什么呢.." required type="text" name="keyword" id="keyboard" value="{$keyword|default=''}">
+                        <!--<input type="hidden" name="Submit" value="搜索" />-->
+                        <p class="search_ico"> <span></span></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-navigation">
+        <nav>
+            <div class="logo"><a href="http://www.fengylin.cn">落木个人博客</a></div>
+            <h2 id="mnavh"><span class="navicon"></span></h2>
+            <ul id="starlist">
+                <!--默认 a标签属性 id="selected" -->
+                <navigation nav-id="1" root="">
+                    <navigationMenu root="li">
+                       <a href="{$menu.href|default=''}" target="{$menu.target|default=''}">{$menu.name|default=''}</a>
+                    </navigationMenu>
+                    <navigationFolder root="li" class="menu" dropdown="ul" dropdown-class="sub">
+                        <a href="#" data-toggle="dropdown" class="menu_t" >{$menu.name|default=''}</a>
+                    </navigationFolder>
+                </navigation>
+            </ul>
+        </nav>
+    </div>
+</header>

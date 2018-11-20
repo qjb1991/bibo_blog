@@ -1,0 +1,74 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="javascript:history.back(-1);">单图文回复</a></li>
+        <li class="active"><a href="{:url('img_add')}">添加回复</a></li>
+    </ul>
+    <form action="{:url('img_add_post')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="100">关键字<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" style="width: 400px;" name="keyword"
+                                   required
+                                   placeholder="请输入关键字"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="100">图文标题<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" style="width: 400px;" name="title"
+                                   required
+                                   placeholder="请输入图文标题"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="100">图文链接<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" style="width: 400px;float: left;" name="url"
+                                   required
+                                   placeholder="请输入图文链接"/>
+                            <input type="button" class="btn" value="选择商品" style="float: left;margin-left: 10px;">
+                            <input type="button" class="btn" value="选择文章" style="float: left;margin-left: 10px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="100">封面图片<span class="form-required">*</span></th>
+                        <td>
+                            <div style="text-align: left;">
+                                <input type='hidden' name='pic' id='thumbnail'>
+                                <a href="javascript:uploadOneImage('图片上传','#thumbnail');">
+                                    <img src="__TMPL__/public/assets/images/default-thumbnail.png" id='thumbnail-preview'
+                                         width='235' height='135' style='cursor: hand'/>
+                                </a>
+                                <input type="button" class="btn btn-sm"
+                                       onclick="$('#thumbnail-preview').attr('src','__TMPL__/public/assets/images/default-thumbnail.png');$('#thumbnail').val('');return false;"
+                                       value="取消图片">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>图文简介<span class="form-required">*</span></th>
+                        <td><textarea class="form-control" required name="desc" placeholder="请输入图文简介" style="height: 100px;"></textarea>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

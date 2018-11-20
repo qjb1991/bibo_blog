@@ -1,0 +1,59 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="javascript:history.back(-1);">留言管理</a></li>
+        <li class="active"><a href="#">编辑留言</a></li>
+    </ul>
+    <form action="{:url('edit_post')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="100">用户名</th>
+                        <td>
+                            <input type="hidden" name="id" value="{$data.id}">
+                            <span class="form-control" style="width: 400px;">{$data.user_name}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="100">用户邮箱</th>
+                        <td>
+                            <input class="form-control" type="text" style="width: 400px;" name="user_email"
+                                   value="{$data.user_email}" placeholder="请输入邮箱"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="100">留言时间</th>
+                        <td>
+                            <input class="form-control js-bootstrap-datetime" type="text" style="width: 400px;" name="time"
+                                   value="{:date('Y-m-d H:i',$data['time'])}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>留言内容</th>
+                        <td><textarea class="form-control" name="content" style="height: 80px;">{$data.content}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>回复内容</th>
+                        <td>
+                            <textarea class="form-control" name="site_reply" style="height: 80px;">{$data.site_reply}</textarea>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                        <a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>
