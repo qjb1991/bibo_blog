@@ -24,10 +24,10 @@ class BaseController extends Controller
      */
     public function __construct(Request $request = null)
     {
-        if (!cmf_is_installed() && $request->module() != 'install') {
-            header('Location: ' . cmf_get_root() . '/?s=install');
-            exit;
-        }
+        // if (!cmf_is_installed() && $request->module() != 'install') {
+        //     header('Location: ' . cmf_get_root() . '/?s=install');
+        //     exit;
+        // }
 
         if (is_null($request)) {
             $request = Request::instance();
