@@ -24,7 +24,7 @@ class ListController extends HomeBaseController
     {
         $id                  = $this->request->param('id', 0, 'intval');
         $portalCategoryModel = new PortalCategoryModel();
-        $category = $portalCategoryModel->where('id', $id)->where('status', 1)->find()->toArray();
+        $category = $portalCategoryModel->where('id', $id)->where('status', 1)->find();
         $where['t1.post_type']=array('eq',1);
         $where['t1.post_status']=array('eq',1);
         $where['t3.id']=array('eq',$category['id']);
