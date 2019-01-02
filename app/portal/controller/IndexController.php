@@ -11,6 +11,7 @@
 namespace app\portal\controller;
 use cmf\controller\HomeBaseController;
 use think\Db;
+use app\portal\model\TouristMsg;
 
 class IndexController extends HomeBaseController
 {
@@ -21,6 +22,8 @@ class IndexController extends HomeBaseController
      */
     public function index()
     {
+        $touristMsgModel = new TouristMsg;
+        $touristMsgModel->writeTouristMsg();
         $where['t1.post_type']=array('eq',1);
         $where['t1.post_status']=array('eq',1);
         $data = Db::name('portal_post')->alias('t1')->where($where)
